@@ -50,6 +50,13 @@ jobs:
       - run: cargo test --locked
       - run: cargo clippy --locked --all-targets -- -D warnings
       - run: npm run tauri build -- --target ${{ matrix.target }} --bundles ${{ matrix.bundles }}
+        env:
+          APPLE_SIGNING_IDENTITY: ${{ runner.os == 'macOS' && '-' || '' }}
+      - name: Проверить подпись приложения и образ macOS
+        if: runner.os == 'macOS'
+        run: |
+          codesign --verify --deep --strict target/${{ matrix.target }}/release/bundle/macos/NetScope.app
+          hdiutil verify target/${{ matrix.target }}/release/bundle/dmg/*.dmg
       - run: node scripts/prepare-release.mjs ${{ matrix.target }}
       - uses: actions/upload-artifact@v4
         with:

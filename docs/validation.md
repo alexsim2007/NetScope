@@ -1,5 +1,7 @@
 # Validation record
 
+Entries below are chronological snapshots. The final section records the current release candidate; earlier version numbers and delivery states are historical.
+
 Date: 2026-11-01. Development host: macOS, Apple Silicon (`arm64`). Toolchain installed for this project: Rust 1.99.1 stable; Node 24.11.1; npm 11.6.2. Resolved versions are recorded in both dependency lockfiles.
 
 ## Automated checks
@@ -83,3 +85,17 @@ Unknown or unsupported device icons now use a neutral box instead of a question 
 `npm run check` passed: lint, 40 frontend tests, TypeScript and production build. Three new physics tests cover release momentum and hub coupling, preservation of a new angular arrangement, and stable separation of overlapping labels. Existing source files and earlier installers were preserved before modification.
 
 Final stronger-physics installers were rebuilt for both platforms; macOS signatures/DMG integrity and both SHA-256 sidecars verified. Current files remain in `artifacts/release/`. Prior installers are preserved in `artifacts/release-before-force-*/`. Installed application was not replaced. Synthetic inspector screenshot: `artifacts/ui-qa/graph-physics-and-neutral-icon.png`.
+
+## GitHub release recovery, 0.1.2 — 2026-11-02
+
+Sources and tags were pushed to `alexsim2007/NetScope`. The failed 0.1.0 release exposed missing bundled npm lock entries under `@tailwindcss/oxide-wasm32-wasi`; only those entries were added, preserving the dependency versions. A fresh install with the runner's npm 11.19.1 passed. Frontend checks passed: lint, 40 tests, TypeScript and Vite production build.
+
+The 0.1.1 Windows job compiled its tests but exited before running them with `STATUS_ENTRYPOINT_NOT_FOUND` (`0xc0000139`). The test harness lacked the Common Controls v6 manifest needed by the Tauri dependency stack. `src-tauri/build.rs` now embeds this dependency through MSVC linker arguments for Windows targets, including library test harnesses, and avoids a duplicate resource manifest. The macOS build path is unchanged.
+
+For 0.1.2, local macOS checks passed (`cargo fmt`, 29 Rust tests, Clippy with warnings denied). The cross-built Windows test EXE was inspected with `llvm-readobj --coff-resources`: one embedded manifest, Common Controls v6 dependency present. The native Windows release job then passed all checks and produced its NSIS installer; its downloaded SHA-256 sidecar matched. A local macOS ARM64 0.1.2 app/DMG was also built with the existing Apple Development identity; strict app signature verification and `hdiutil verify` passed. Local packages are preserved under `artifacts/release-0.1.2-local/`, downloaded CI packages under `artifacts/release-0.1.2-ci/`.
+
+GitHub's release macOS job remained queued while the same source's main-branch macOS job passed its tests and Clippy and reached packaging. After the Windows release job succeeded, the stalled release run was cancelled and its unsuccessful jobs retried, retaining the successful Windows result and artifact. See [release run 41491686690](https://github.com/alexsim2007/NetScope/actions/runs/41491686690).
+
+The main-branch macOS CI build completed, and its downloaded DMG passed `hdiutil verify`; its bundle version was 0.1.2 and executable was ARM64. Strict signature verification exposed an incomplete unsigned bundle signature (`code has no resources but signature indicates they must be present`). Both workflows now explicitly request Tauri's documented ad-hoc identity (`APPLE_SIGNING_IDENTITY=-`) and verify the complete app signature and DMG before uploading. This does not supply Developer ID or notarization. Release source tags are preserved; updated workflow builds can be dispatched against an existing tag.
+
+Native Windows installation, OS tray/notifications/autostart acceptance, extended router tests and distribution signing/notarization remain manual release checks. No release has been published, and the installed application was not replaced.
