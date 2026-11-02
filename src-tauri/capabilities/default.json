@@ -1,0 +1,14 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "main-window",
+  "description": "Only the local NetScope window may receive monitoring events and request notification permission.",
+  "windows": ["main"],
+  "permissions": [
+    "core:event:allow-listen",
+    "core:event:allow-unlisten",
+    "core:window:allow-set-theme",
+    "core:window:allow-set-background-color",
+    "notification:allow-is-permission-granted",
+    "notification:allow-request-permission"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "result": {
+    "187": [
+      {
+        "flags": "reachable",
+        "iface": "br0",
+        "ip": "192.168.50.21",
+        "mac": "02:00:00:00:00:01",
+        "name": "WLAN",
+        "hostname": "Sample laptop"
+      },
+      {
+        "flags": "stale",
+        "iface": "br0",
+        "ip": "fd00::21",
+        "mac": "02-00-00-00-00-01",
+        "name": "WLAN"
+      },
+      { "flags": "stale", "iface": "br0", "ip": "192.168.50.22", "mac": "02:00:00:00:00:02" }
+    ],
+    "64": [
+      {
+        "mac": "0200.0000.0001",
+        "online": 4532,
+        "band": "5 GHz",
+        "mode": "11ac",
+        "SSID": "ExampleWiFi",
+        "lastTxRate": 702,
+        "rssi": 78,
+        "tx_bytes": 769750325,
+        "rx_bytes": 80012380,
+        "sleep": false,
+        "hostname": "Sample laptop"
+      }
+    ]
+  }
+}

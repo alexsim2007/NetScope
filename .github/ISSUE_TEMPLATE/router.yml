@@ -1,0 +1,34 @@
+name: Новый маршрутизатор
+description: Заявка на поддержку модели
+title: '[Маршрутизатор] '
+labels: [router-support]
+body:
+  - type: input
+    id: model
+    attributes:
+      label: Производитель и точная модель
+    validations:
+      required: true
+  - type: input
+    id: revision
+    attributes:
+      label: Аппаратная ревизия и версия прошивки
+    validations:
+      required: true
+  - type: textarea
+    id: api
+    attributes:
+      label: Документация API или описание запросов чтения
+      description: Метод, путь запроса, способ авторизации, единицы измерения. Не отправляйте Authorization, cookie или пароли.
+  - type: textarea
+    id: example
+    attributes:
+      label: Обезличенный JSON
+      description: Вымышленные имена, IP и MAC; сохраните структуру, типы полей и пустые значения. Если не знаете, оставьте пустым — начнём с модели и прошивки.
+      render: json
+  - type: checkboxes
+    id: hardware
+    attributes:
+      label: Проверка
+      options:
+        - label: Я могу проверить адаптер на своём маршрутизаторе

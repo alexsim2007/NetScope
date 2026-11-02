@@ -1,0 +1,17 @@
+name: Идея
+description: Предложить улучшение NetScope
+title: '[Идея] '
+labels: [enhancement]
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: Какую задачу нужно решить
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Как это должно работать
+    validations:
+      required: true

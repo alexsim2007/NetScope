@@ -1,0 +1,29 @@
+name: Ошибка
+description: Сообщить о неисправности NetScope
+title: '[Ошибка] '
+labels: [bug]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Что произошло и что ожидалось
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Как повторить
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: ОС и сборка NetScope
+      placeholder: Windows 11 / macOS, дата сборки
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Скриншот или безопасная диагностика
+      description: Используйте деморежим. Удалите пароли, токены, cookie, реальные IP/MAC и имена устройств.
